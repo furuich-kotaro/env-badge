@@ -30,12 +30,12 @@ export function findMatchingRule(
 }
 
 export function resolveMatch(rule: EnvRule): MatchedEnv {
-  const palette = KIND_COLORS[rule.kind] ?? KIND_COLORS.custom;
+  const palette = KIND_COLORS[rule.kind];
   return {
     rule,
     label: rule.label,
-    background: rule.background ?? palette.background,
-    foreground: rule.foreground ?? palette.foreground,
+    background: palette.background,
+    foreground: palette.foreground,
   };
 }
 

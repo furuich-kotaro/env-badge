@@ -12,18 +12,9 @@
       <header class="app__header">
         <h1>Env Badge</h1>
         <p class="app__lede">
-          Show a colored badge that tells you which environment the current tab is — so you
-          never <em>fix prod by accident</em> again.
+          Show a colored banner + badge so you never <em>fix prod by accident</em> again.
         </p>
       </header>
-
-      <section class="card">
-        <h2>Try a URL</h2>
-        <div class="row">
-          <input id="probe-input" type="text" placeholder="https://staging.example.com" />
-          <span id="probe-result" class="probe-result">—</span>
-        </div>
-      </section>
 
       <section class="card">
         <div class="card__header">
@@ -34,8 +25,8 @@
           </div>
         </div>
         <p class="hint">
-          Rules are evaluated top to bottom. The first match wins. Patterns match against the
-          hostname (e.g. <code>app.example.com</code>).
+          Rules are evaluated top to bottom — the first match wins. Patterns are matched
+          against the tab's hostname (e.g. <code>app.example.com</code>).
         </p>
         <div id="rules" class="rules"></div>
       </section>
@@ -48,40 +39,14 @@
             <select id="position">
               <option value="top-left">Top left</option>
               <option value="top-right">Top right</option>
-              <option value="bottom-left">Bottom left</option>
-              <option value="bottom-right">Bottom right</option>
             </select>
           </label>
           <label>
             <span>Size</span>
             <select id="size">
-              <option value="compact">Compact</option>
               <option value="normal">Normal</option>
-              <option value="large">Large</option>
               <option value="huge">Huge</option>
             </select>
-          </label>
-          <label>
-            <span>Display style</span>
-            <select id="style">
-              <option value="badge">Badge only</option>
-              <option value="banner">Banner + badge</option>
-              <option value="frame">Frame + badge</option>
-              <option value="all">Banner + frame + badge</option>
-            </select>
-          </label>
-          <label class="checkbox">
-            <input id="stripes" type="checkbox" />
-            <span>Diagonal stripes (more attention-grabbing)</span>
-          </label>
-          <label>
-            <span>Opacity</span>
-            <input id="opacity" type="range" min="0.3" max="1" step="0.02" />
-            <output id="opacity-out"></output>
-          </label>
-          <label class="checkbox">
-            <input id="show-unknown" type="checkbox" />
-            <span>Show <strong>UNKNOWN</strong> badge for unmatched hosts</span>
           </label>
         </div>
       </section>
@@ -93,7 +58,6 @@
 
     <template id="rule-template">
       <div class="rule">
-        <div class="rule__drag" aria-hidden="true">⋮⋮</div>
         <label class="rule__enabled">
           <input type="checkbox" data-field="enabled" />
         </label>
@@ -103,15 +67,12 @@
           <option value="staging">staging</option>
           <option value="development">development</option>
           <option value="local">local</option>
-          <option value="custom">custom</option>
         </select>
         <select data-field="patternType">
           <option value="glob">glob</option>
           <option value="regex">regex</option>
         </select>
         <input class="rule__pattern" data-field="pattern" placeholder="*.staging.example.com" />
-        <input class="rule__color" type="color" data-field="background" title="Background color" />
-        <input class="rule__color" type="color" data-field="foreground" title="Text color" />
         <div class="rule__order">
           <button type="button" data-action="up" title="Move up">▲</button>
           <button type="button" data-action="down" title="Move down">▼</button>

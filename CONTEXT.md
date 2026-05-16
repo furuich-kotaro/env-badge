@@ -17,7 +17,7 @@ Rule がマッチ対象とする文字列。`glob` または `regex` のいず�
 _Avoid_: 「正規表現」「URL ルール」(URL 全体ではなく hostname 限定であることを明示するため)
 
 **Environment Kind**:
-Rule の分類タグ (`production` / `staging` / `development` / `local` / `custom`)。**バッジ色のプリセット選択肢としてのみ**機能する語彙であり、識別単位ではない。ユーザーが kind を変えると `background` / `foreground` のデフォルトが切り替わる。
+Rule の分類タグ (`production` / `staging` / `development` / `local`)。**バッジ色のプリセット選択肢としてのみ**機能する語彙であり、識別単位ではない。色は kind から一意に決まり、ルール単位での色カスタムは持たない。
 _Avoid_: 「ステージ」「環境タイプ」(単独で識別子のように使うと **Environment** との混同を生む)
 
 **Label**:
@@ -28,14 +28,6 @@ _Avoid_: 「タグ」「環境名」
 現在のタブの `hostname` を、有効化された Rule に対して**配列の先頭から評価し、最初に該当した Rule をその場の判定結果として確定する**動作。マッチ結果 (`MatchedEnv`) は **Label** と背景色・前景色を保持する。
 _Avoid_: 「ヒット」「該当判定」
 
-**Display Mode**:
-バッジ表示の重ね方を表す設定。`badge` (角の太字チップのみ) / `banner` (上端または下端のカラーバー + バッジ) / `frame` (画面 4 辺の枠 + バッジ) / `all` (3 つすべて) のいずれか 1 つ。デフォルトは `banner`。
-_Avoid_: 「テーマ」「スタイル」(`style` プロパティ名は CSS 由来の慣習に乗っているが、ドメイン上は **Display Mode** と呼ぶ)
-
-**Probe**:
-options 画面の URL/hostname 入力欄。**Match** ロジックをユーザー操作なしに試せる開発支援機能であり、ストレージや表示モードには影響しない。
-_Avoid_: 「テスター」「シミュレータ」
-
 ## Relationships
 
 - 1つの **Rule** は 1つの **Pattern** と 1つの **Environment Kind** と 1つの **Label** を持つ
@@ -43,8 +35,9 @@ _Avoid_: 「テスター」「シミュレータ」
 - **Environment Kind** は色のデフォルト導出にのみ使われ、識別単位ではない
 - 複数の **Rule** が同じ hostname にマッチしたときは **配列の先頭から評価され、最初にマッチした Rule を採用する** ([ADR-0001](./docs/adr/0001-first-match-wins-rule-evaluation.md))
 - **Match** は **top-frame の hostname** のみを対象とし、埋め込み iframe には介入しない (1 タブ = 1 判定 = 1 表示の不変条件)
-- **Match** がいずれの Rule にもヒットしない場合、**デフォルトでは何も描画しない** (本番ドメインは明示登録する前提。`showWhenUnknown` を ON にすると UNKNOWN バッジを出せる)
+- **Match** がいずれの Rule にもヒットしない場合は**何も描画しない**。本番ドメインは明示登録する前提
 - `production` を意図する Rule は**デフォルトの Rule セットに含めない** ([ADR-0004](./docs/adr/0004-no-production-defaults.md))
+- 表示形態は**上端カラーバナー (斜めストライプ) + 角の太字バッジ**の単一表現に固定 (位置とサイズのみユーザーが選べる)
 
 ## Example dialogue
 

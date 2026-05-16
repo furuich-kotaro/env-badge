@@ -53,21 +53,5 @@ function computeMatch(settings: EnvBadgeSettings): MatchedEnv | undefined {
   const host = hostFromUrl(location.href);
   if (!host) return undefined;
   const rule = findMatchingRule(settings.rules, host);
-  if (!rule) {
-    if (!settings.showWhenUnknown) return undefined;
-    return {
-      rule: {
-        id: 'unknown',
-        enabled: true,
-        label: 'UNKNOWN',
-        kind: 'custom',
-        patternType: 'glob',
-        pattern: '',
-      },
-      label: 'UNKNOWN',
-      background: '#444444',
-      foreground: '#ffffff',
-    };
-  }
-  return resolveMatch(rule);
+  return rule ? resolveMatch(rule) : undefined;
 }

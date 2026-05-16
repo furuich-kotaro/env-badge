@@ -8,7 +8,6 @@ export const KIND_COLORS: Record<
   staging: { background: '#e67e22', foreground: '#1a1a1a' },
   development: { background: '#27ae60', foreground: '#ffffff' },
   local: { background: '#2980b9', foreground: '#ffffff' },
-  custom: { background: '#444444', foreground: '#ffffff' },
 };
 
 export const DEFAULT_RULES: EnvRule[] = [
@@ -64,10 +63,6 @@ export const DEFAULT_RULES: EnvRule[] = [
 
 export const DEFAULT_SETTINGS: EnvBadgeSettings = {
   rules: DEFAULT_RULES,
-  showWhenUnknown: false,
   position: 'top-left',
-  size: 'large',
-  opacity: 0.95,
-  style: 'banner',
-  stripes: true,
+  size: 'normal',
 };

@@ -102,27 +102,6 @@ body {
   font-size: 12px;
 }
 
-.row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.row input {
-  flex: 1;
-}
-
-.probe-result {
-  font-weight: 700;
-  font-size: 13px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  min-width: 90px;
-  text-align: center;
-}
-
 .rules {
   display: flex;
   flex-direction: column;
@@ -131,23 +110,13 @@ body {
 
 .rule {
   display: grid;
-  grid-template-columns: auto auto minmax(80px, 110px) 120px 80px minmax(
-      180px,
-      1fr
-    ) 36px 36px auto auto;
+  grid-template-columns: auto minmax(80px, 110px) 120px 80px minmax(180px, 1fr) 36px auto;
   align-items: center;
   gap: 8px;
   padding: 8px;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-}
-
-.rule__drag {
-  color: var(--muted);
-  cursor: grab;
-  user-select: none;
-  font-size: 14px;
 }
 
 .rule__order {
@@ -170,20 +139,10 @@ body {
   border-color: var(--accent);
 }
 
-.rule__color {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-}
-
 input[type="text"],
 input:not([type]),
 .rule input[type="text"],
-.rule input:not([type="checkbox"]):not([type="color"]):not([type="range"]),
+.rule input:not([type="checkbox"]):not([type="range"]),
 select {
   background: var(--card);
   color: var(--text);
