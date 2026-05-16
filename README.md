@@ -92,6 +92,9 @@ pnpm test                   # Vitest
 
 ```
 env-badge/
+├── CONTEXT.md              # ドメイン用語集
+├── docs/
+│   └── adr/                # Architecture Decision Records
 ├── assets/
 │   └── icon.svg            # auto-icons の元画像
 ├── entrypoints/
@@ -108,6 +111,15 @@ env-badge/
 ├── biome.json
 └── mise.toml
 ```
+
+## ドキュメント
+
+- [`CONTEXT.md`](./CONTEXT.md) — ドメイン用語集 (Rule / Pattern / Environment Kind / Label / Display Mode / Match / Probe)
+- [`docs/adr/`](./docs/adr/) — Architecture Decision Records
+  - [0001 First-match-wins for Rule evaluation](./docs/adr/0001-first-match-wins-rule-evaluation.md)
+  - [0002 Settings persisted in chrome.storage.sync](./docs/adr/0002-settings-stored-in-chrome-storage-sync.md)
+  - [0003 WXT as the extension framework](./docs/adr/0003-wxt-as-the-extension-framework.md)
+  - [0004 No production rules in the default rule set](./docs/adr/0004-no-production-defaults.md)
 
 ## ライセンス
 
