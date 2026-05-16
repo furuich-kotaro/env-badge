@@ -1,6 +1,13 @@
-import { DEFAULT_SETTINGS } from '../../src/defaults';
+import {
+  BADGE_COLOR_LABELS,
+  BADGE_COLOR_ORDER,
+  BADGE_COLORS,
+  DEFAULT_COLOR_FOR_KIND,
+  DEFAULT_SETTINGS,
+} from '../../src/defaults';
 import { getSettings, saveSettings } from '../../src/storage';
 import type {
+  BadgeColor,
   EnvBadgeSettings,
   EnvKind,
   EnvRule,
@@ -84,15 +91,21 @@ function bindRuleNode(node: HTMLElement, rule: EnvRule, index: number): void {
     enabled: qs<HTMLInputElement>(node, '[data-field="enabled"]'),
     label: qs<HTMLInputElement>(node, '[data-field="label"]'),
     kind: qs<HTMLSelectElement>(node, '[data-field="kind"]'),
+    color: qs<HTMLSelectElement>(node, '[data-field="color"]'),
     patternType: qs<HTMLSelectElement>(node, '[data-field="patternType"]'),
     pattern: qs<HTMLInputElement>(node, '[data-field="pattern"]'),
   };
+  const swatch = qs<HTMLSpanElement>(node, '[data-color-preview]');
+
+  populateColorOptions(fields.color);
 
   fields.enabled.checked = rule.enabled;
   fields.label.value = rule.label;
   fields.kind.value = rule.kind;
+  fields.color.value = rule.color;
   fields.patternType.value = rule.patternType;
   fields.pattern.value = rule.pattern;
+  applySwatch(swatch, rule.color);
 
   fields.enabled.addEventListener('change', () => {
     rule.enabled = fields.enabled.checked;
@@ -104,6 +117,15 @@ function bindRuleNode(node: HTMLElement, rule: EnvRule, index: number): void {
   });
   fields.kind.addEventListener('change', () => {
     rule.kind = fields.kind.value as EnvKind;
+    const nextColor = DEFAULT_COLOR_FOR_KIND[rule.kind];
+    rule.color = nextColor;
+    fields.color.value = nextColor;
+    applySwatch(swatch, nextColor);
+    queueSave();
+  });
+  fields.color.addEventListener('change', () => {
+    rule.color = fields.color.value as BadgeColor;
+    applySwatch(swatch, rule.color);
     queueSave();
   });
   fields.patternType.addEventListener('change', () => {
@@ -151,9 +173,24 @@ function newRule(): EnvRule {
     enabled: true,
     label: 'NEW',
     kind: 'staging',
+    color: DEFAULT_COLOR_FOR_KIND.staging,
     patternType: 'glob',
     pattern: '*.example.com',
   };
+}
+
+function populateColorOptions(select: HTMLSelectElement): void {
+  if (select.options.length > 0) return;
+  for (const color of BADGE_COLOR_ORDER) {
+    const opt = document.createElement('option');
+    opt.value = color;
+    opt.textContent = BADGE_COLOR_LABELS[color];
+    select.appendChild(opt);
+  }
+}
+
+function applySwatch(swatch: HTMLElement, color: BadgeColor): void {
+  swatch.style.backgroundColor = BADGE_COLORS[color].background;
 }
 
 function queueSave(): void {

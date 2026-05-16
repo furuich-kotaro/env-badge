@@ -9,20 +9,21 @@
 - 上端のストライプ・バナー + 角の太字バッジで**周辺視野でも気づける**強度の表示
 - ルールは複数登録でき、上から順に評価 — 最初にマッチしたものを採用 ([ADR-0001](./docs/adr/0001-first-match-wins-rule-evaluation.md))
 - 表示位置 (上端・左 / 上端・右) とサイズ (Normal / Huge) の 2 軸だけカスタマイズ可
-- 色は **Environment Kind** (`production` / `staging` / `development` / `local`) から一意に決まる (赤 / 橙 / 緑 / 青)
+- バッジの色は Chrome タブグループ準拠の 9 色プリセット (grey / blue / cyan / green / yellow / orange / red / pink / purple) から選択
+- Environment Kind を変えると Badge Color のデフォルトが自動で切り替わる (production → red, staging → orange, development → green, local → blue)
 - `chrome.storage.sync` で同じ Google アカウント間で設定同期 ([ADR-0002](./docs/adr/0002-settings-stored-in-chrome-storage-sync.md))
 - Shadow DOM 経由で描画するためページの CSS と衝突しない
 
 ## デフォルトルール
 
-| パターン (glob) | ラベル  | kind        |
-| --------------- | ------- | ----------- |
-| `localhost`     | LOCAL   | local       |
-| `127.0.0.1`     | LOCAL   | local       |
-| `*.local`       | LOCAL   | local       |
-| `staging.*`     | STAGING | staging     |
-| `*.staging.*`   | STAGING | staging     |
-| `*.dev.*`       | DEV     | development |
+| パターン (glob) | ラベル  | kind        | color  |
+| --------------- | ------- | ----------- | ------ |
+| `localhost`     | LOCAL   | local       | blue   |
+| `127.0.0.1`     | LOCAL   | local       | blue   |
+| `*.local`       | LOCAL   | local       | blue   |
+| `staging.*`     | STAGING | staging     | orange |
+| `*.staging.*`   | STAGING | staging     | orange |
+| `*.dev.*`       | DEV     | development | green  |
 
 > 本番 (`production`) ルールは**意図的にデフォルトに含めません** ([ADR-0004](./docs/adr/0004-no-production-defaults.md))。
 > 本番ドメインは人によって違うため、汎用パターンで誤検知させて安心感を植え付けるよりも、各自で明示登録してもらう方が安全と判断しています。本番タブを派手に主張させたければ Size = Huge にしておくと良いです。
@@ -105,7 +106,7 @@ env-badge/
 
 ## ドキュメント
 
-- [`CONTEXT.md`](./CONTEXT.md) — ドメイン用語集 (Environment / Rule / Pattern / Environment Kind / Label / Match)
+- [`CONTEXT.md`](./CONTEXT.md) — ドメイン用語集 (Environment / Rule / Pattern / Environment Kind / Label / Badge Color / Match)
 - [`docs/adr/`](./docs/adr/) — Architecture Decision Records
   - [0001 First-match-wins for Rule evaluation](./docs/adr/0001-first-match-wins-rule-evaluation.md)
   - [0002 Settings persisted in chrome.storage.sync](./docs/adr/0002-settings-stored-in-chrome-storage-sync.md)

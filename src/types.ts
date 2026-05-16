@@ -6,11 +6,23 @@ export type BadgePosition = 'top-left' | 'top-right';
 
 export type BadgeSize = 'normal' | 'huge';
 
+export type BadgeColor =
+  | 'grey'
+  | 'blue'
+  | 'red'
+  | 'yellow'
+  | 'green'
+  | 'pink'
+  | 'purple'
+  | 'cyan'
+  | 'orange';
+
 export interface EnvRule {
   id: string;
   enabled: boolean;
   label: string;
   kind: EnvKind;
+  color: BadgeColor;
   patternType: PatternType;
   pattern: string;
 }

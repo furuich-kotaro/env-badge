@@ -13,6 +13,7 @@ const rule = (overrides: Partial<EnvRule>): EnvRule => ({
   enabled: true,
   label: 'L',
   kind: 'staging',
+  color: 'orange',
   patternType: 'glob',
   pattern: '*',
   ...overrides,

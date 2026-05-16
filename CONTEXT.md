@@ -9,7 +9,7 @@
 _Avoid_: 「サイト」「サーバ」「ステージ」
 
 **Rule**:
-ユーザーが設定する1件の判定設定。1つの **Pattern** と 1つの **Environment Kind** と 1つの **Label** を持つ。
+ユーザーが設定する1件の判定設定。1つの **Pattern** と 1つの **Environment Kind** と 1つの **Label** と 1つの **Badge Color** を持つ。
 _Avoid_: 「条件」「マッチャー」
 
 **Pattern**:
@@ -17,12 +17,16 @@ Rule がマッチ対象とする文字列。`glob` または `regex` のいず�
 _Avoid_: 「正規表現」「URL ルール」(URL 全体ではなく hostname 限定であることを明示するため)
 
 **Environment Kind**:
-Rule の分類タグ (`production` / `staging` / `development` / `local`)。**バッジ色のプリセット選択肢としてのみ**機能する語彙であり、識別単位ではない。色は kind から一意に決まり、ルール単位での色カスタムは持たない。
+Rule の分類タグ (`production` / `staging` / `development` / `local`)。**新規登録時に Badge Color のデフォルトを推定する**ためのセマンティクスを担う。識別単位ではない (同じ kind でも色を変えて区別してよい)。
 _Avoid_: 「ステージ」「環境タイプ」(単独で識別子のように使うと **Environment** との混同を生む)
 
 **Label**:
 バッジに描画される短い文字列 (例: `PROD`, `STG`, `LOCAL`)。**Environment Kind** とは独立に決めてよく、`kind: staging` でも label を `STG-AU` のようにカスタマイズできる。
 _Avoid_: 「タグ」「環境名」
+
+**Badge Color**:
+バッジ・バナーの色を決める**事前定義パレット**。Chrome のタブグループに倣った 9 色 (`grey` / `blue` / `cyan` / `green` / `yellow` / `orange` / `red` / `pink` / `purple`)。任意の色は持たず、背景色から前景色 (黒/白) も一意に決まる。
+_Avoid_: 「カラーコード」「テーマカラー」「カスタム色」(自由な hex 入力は許容しない設計のため)
 
 **Match**:
 現在のタブの `hostname` を、有効化された Rule に対して**配列の先頭から評価し、最初に該当した Rule をその場の判定結果として確定する**動作。マッチ結果 (`MatchedEnv`) は **Label** と背景色・前景色を保持する。
@@ -30,9 +34,10 @@ _Avoid_: 「ヒット」「該当判定」
 
 ## Relationships
 
-- 1つの **Rule** は 1つの **Pattern** と 1つの **Environment Kind** と 1つの **Label** を持つ
+- 1つの **Rule** は 1つの **Pattern** / **Environment Kind** / **Label** / **Badge Color** を持つ
 - **Pattern** は `hostname` のみを評価対象とする (port, pathname, search, hash は対象外)
-- **Environment Kind** は色のデフォルト導出にのみ使われ、識別単位ではない
+- **Environment Kind** は **Badge Color** のデフォルト推定にのみ使われ、識別単位ではない
+- **Badge Color** は事前定義 9 色から選ぶ (Chrome タブグループ準拠)。任意 hex は持たない
 - 複数の **Rule** が同じ hostname にマッチしたときは **配列の先頭から評価され、最初にマッチした Rule を採用する** ([ADR-0001](./docs/adr/0001-first-match-wins-rule-evaluation.md))
 - **Match** は **top-frame の hostname** のみを対象とし、埋め込み iframe には介入しない (1 タブ = 1 判定 = 1 表示の不変条件)
 - **Match** がいずれの Rule にもヒットしない場合は**何も描画しない**。本番ドメインは明示登録する前提

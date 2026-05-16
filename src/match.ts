@@ -1,4 +1,4 @@
-import { KIND_COLORS } from './defaults';
+import { BADGE_COLORS } from './defaults';
 import type { EnvRule, MatchedEnv } from './types';
 
 const GLOB_META = /[.+?^${}()|[\]\\]/g;
@@ -30,7 +30,7 @@ export function findMatchingRule(
 }
 
 export function resolveMatch(rule: EnvRule): MatchedEnv {
-  const palette = KIND_COLORS[rule.kind];
+  const palette = BADGE_COLORS[rule.color];
   return {
     rule,
     label: rule.label,

@@ -110,13 +110,35 @@ body {
 
 .rule {
   display: grid;
-  grid-template-columns: auto minmax(80px, 110px) 120px 80px minmax(180px, 1fr) 36px auto;
+  grid-template-columns:
+    auto minmax(80px, 110px) 120px minmax(120px, 140px) 80px
+    minmax(180px, 1fr) 36px auto;
   align-items: center;
   gap: 8px;
   padding: 8px;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
+}
+
+.rule__color-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rule__color-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.rule__color-select {
+  flex: 1;
+  min-width: 0;
 }
 
 .rule__order {
