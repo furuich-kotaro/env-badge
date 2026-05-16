@@ -1,0 +1,10 @@
+node_modules
+.output
+.wxt
+stats.html
+stats-*.json
+*.zip
+.DS_Store
+
+# Override global ignore: keep mise tool versions in this repo
+!mise.toml
